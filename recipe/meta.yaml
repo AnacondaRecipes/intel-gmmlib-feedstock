@@ -1,24 +1,24 @@
-{% set name = "gmmlib" %}
+{% set name = "intel-gmmlib" %}
 {% set version = "22.9.0" %}
 
 package:
-  name: intel-gmmlib
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/intel/gmmlib/archive/refs/tags/intel-gmmlib-{{ version }}.tar.gz
+  url: https://github.com/intel/gmmlib/archive/refs/tags/{{ name }}-{{ version }}.tar.gz
   sha256: 6ae262b95540681ad5478c63affb880135f772c95410b092009a6f7dfc04a5ba
 
 build:
   number: 0
-  skip: true  # [not linux]
+  skip: true  # [not (linux and x86_64)]
   run_exports:
     - {{ pin_subpackage("intel-gmmlib", max_pin="x") }}
 
 requirements:
   build:
-    - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
+    - {{ compiler('cxx') }}
     - cmake
     - make
 
@@ -32,6 +32,9 @@ about:
   license_file: LICENSE.md
   license_family: MIT
   summary: Intel(R) Graphics Memory Management Library
+  description: Intel(R) Graphics Memory Management Library
+  dev_url: https://github.com/intel/gmmlib
+  doc_url: https://github.com/intel/gmmlib
 
 extra:
   recipe-maintainers:
